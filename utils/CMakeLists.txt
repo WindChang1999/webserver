@@ -1,6 +1,4 @@
-set(UTILS_SRC
-    TimeStamp.cpp
-)
+file(GLOB UTILS_SRC *.cpp)
 
 add_library(webserver_utils ${UTILS_SRC})
 

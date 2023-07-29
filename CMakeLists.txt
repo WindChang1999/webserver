@@ -20,9 +20,15 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 include(FetchContent)
 FetchContent_Declare(
     googletest
-    URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG b796f7d44681514f58a683a3a71ff17c94edb0c1 
 )
-FetchContent_MakeAvailable(googletest)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG 7e635fca68d014934b4af8a1cf874f63989352b7
+)
+FetchContent_MakeAvailable(googletest spdlog)
 include_directories(${PROJECT_SOURCE_DIR})
 enable_testing()
 

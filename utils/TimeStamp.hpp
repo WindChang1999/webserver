@@ -17,7 +17,7 @@ public:
     ~TimeStamp() {};
 
     std::string toString() const;
-    std::string toFormattedString(bool showMicroseconds = true) const;
+    std::string toFormattedString(bool showMicroseconds = false) const;
 
     static TimeStamp now(); 
 };

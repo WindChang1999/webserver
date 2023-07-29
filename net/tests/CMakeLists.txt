@@ -1,0 +1,5 @@
+add_executable(EventLoopTest EventLoopTest.cpp)
+target_link_libraries(EventLoopTest webserver_net webserver_utils GTest::gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(EventLoopTest)
