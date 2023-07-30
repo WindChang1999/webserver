@@ -1,5 +1,11 @@
-add_executable(EventLoopTest EventLoopTest.cpp)
-target_link_libraries(EventLoopTest webserver_net webserver_utils GTest::gtest_main)
+set(TESTS
+    EventLoopTest.cpp
+)
 
 include(GoogleTest)
-gtest_discover_tests(EventLoopTest)
+foreach(TEST IN LISTS TESTS)
+    string(REGEX REPLACE ".cpp" "" TARGET ${TEST})
+    add_executable(${TARGET} ${TEST})
+    target_link_libraries(${TARGET} webserver_net GTest::gtest_main)
+    gtest_discover_tests(${TARGET})
+endforeach()
