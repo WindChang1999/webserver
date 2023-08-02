@@ -11,7 +11,7 @@ Poller::~Poller() {
 
 }
 
-TimeStamp Poller::poll(int timeoutMs, ChannelList& activeChannels) {
+TimeStamp Poller::poll(ChannelList& activeChannels, int timeoutMs) {
     int numEvents = ::poll(_pollfds.data(), _pollfds.size(), timeoutMs);
     TimeStamp now(TimeStamp::now());
     if (numEvents > 0) {
@@ -27,7 +27,7 @@ TimeStamp Poller::poll(int timeoutMs, ChannelList& activeChannels) {
                 activeChannels.push_back(channel);
             }
         }
-    } else if (numEvents == 0){
+    } else if (numEvents == 0) {
         spdlog::trace("Poller::poll {:d}ms timeout", timeoutMs);
     } else {
         spdlog::critical("Poller::poll error");
@@ -49,7 +49,8 @@ void Poller::updateChannel(Channel* channel) {
         _pollfds[index].revents = 0;
     } else {
         assert(_channels.count(fd) == 0 && "Shouldn't exist");
-        _pollfds.emplace_back(fd, events, 0);
+        struct pollfd pfd{fd, events, 0};
+        _pollfds.push_back(pfd);
         index = static_cast<int>(_pollfds.size() - 1);
         channel->set_index(index);
         _channels[fd] = channel;

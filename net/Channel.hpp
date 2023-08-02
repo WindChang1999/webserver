@@ -1,6 +1,6 @@
 #include<functional>
 
-class Poller;
+class EventLoop;
 
 class Channel {
 public:
@@ -12,13 +12,13 @@ private:
     short _events;
     short _revents;
     int _index;
-    Poller* _poller;
+    EventLoop* _ownerloop;
     static const int kNoneEvent, kReadEvent, kWriteEvent;
 
     void update();
 
 public: 
-    Channel(Poller* loop, int fd);
+    Channel(EventLoop* loop, int fd);
     void handleEvent();
     void setReadCallBack(const EventCallBack& cb) {
         _readCallBack = cb;

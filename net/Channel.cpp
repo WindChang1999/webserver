@@ -1,5 +1,5 @@
 #include<poll.h>
-#include<net/Poller.hpp>
+#include<net/EventLoop.hpp>
 #include<net/Channel.hpp>
 #include<spdlog/spdlog.h>
 
@@ -7,8 +7,8 @@ const int Channel::kNoneEvent = 0;
 const int Channel::kReadEvent = POLLIN | POLLPRI;
 const int Channel::kWriteEvent = POLLOUT;
 
-Channel::Channel(Poller* poller, int fd):
-    _poller(poller),
+Channel::Channel(EventLoop* loop, int fd):
+    _ownerloop(loop),
     _fd(fd),
     _events(kNoneEvent),
     _revents(kNoneEvent),
@@ -16,8 +16,8 @@ Channel::Channel(Poller* poller, int fd):
 
 
 void Channel::update() {
-    assert(_poller != nullptr);
-    _poller->updateChannel(this);
+    assert(_ownerloop != nullptr);
+    _ownerloop->updateChannel(this);
 }
 
 void Channel::handleEvent() {

@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<map>
+#include<utils/TimeStamp.hpp>
 
 struct pollfd;
 class Channel;
@@ -22,7 +23,7 @@ private:
 public:
     Poller(EventLoop* loop);
     ~Poller();
-    TimeStamp poll(int timeoutMs, ChannelList& activeChannels);
+    TimeStamp poll(ChannelList& activeChannels, int timeoutMs);
 
     void updateChannel(Channel* channel);
     void removeChannel(Channel* channel);
