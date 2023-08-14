@@ -2,6 +2,7 @@ set(NET_SRC
     Channel.cpp
     EventLoop.cpp
     Poller.cpp
+    InetAddress.cpp
 )
 
 add_library(webserver_net ${NET_SRC})

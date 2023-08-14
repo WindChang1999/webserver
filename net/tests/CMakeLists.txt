@@ -1,5 +1,6 @@
 set(TESTS
     EventLoopTest.cpp
+    InetAddressTest.cpp
 )
 
 include(GoogleTest)
